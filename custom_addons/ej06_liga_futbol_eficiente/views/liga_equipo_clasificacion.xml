@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- list(list) View -->
+    <record id="liga_equipo_clasificacion_view_list" model="ir.ui.view">
+        <field name="name">Lista de Equipos de la liga</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <!-- Indicamos el orden para poner la clasificacion-->
+            <list decoration-muted="True" default_order="puntos desc"> <!-- 'desc' descendiente ; 'asc' ascendente -->
+                <field name="escudo" widget="image" class="oe_avatar" width="60" />
+                <field name="nombre" width="120" />
+                <field name="puntos" width="80" />
+                <field name="jugados" width="80" />
+                <field name="goles_a_favor" width="100" />
+                <field name="goles_en_contra" width="100" />
+                <field name="victorias" width="80" />
+                <field name="empates" width="80" />
+                <field name="derrotas" width="80" />
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Vista busqueda-->
+    <record id="liga_equipo_clasificacion_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda de Equipos por nombre</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Indicamos el action de esta nueva vista -->
+    <record id='liga_eficiente_equipo_clasificacion_action' model='ir.actions.act_window'>
+        <field name="name">Clasificacion de la liga</field>
+        <field name="res_model">liga_eficiente.equipo</field>
+        <!-- Indicamos que este modelo se puede ver en list -->
+        <field name="view_mode">list</field>
+        <!-- Si no lo ponemos, cogera la otra vista list definida en equipo
+        esto se usa para diferentes vistas de un mismo modelo-->
+        <field name="view_id" ref="liga_equipo_clasificacion_view_list" />
+    </record>
+    <menuitem name="Clasificacion" id="liga_eficiente_equipo_clasificacion_menu" parent="liga_eficiente_base_menu" action="liga_eficiente_equipo_clasificacion_action" />
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='liga_eficiente_equipo_action' model='ir.actions.act_window'>
+        <field name="name">Equipos de la liga</field>
+        <field name="res_model">liga_eficiente.equipo</field>
+        <!-- Indicamos que este modelo se puede ver en kanban, list y form -->
+        <field name="view_mode">list,kanban,form,graph</field>
+    </record>
+
+    <menuitem name="Liga Eficiente" id="liga_eficiente_base_menu"
+            web_icon="EJ06-LigaFutbolEficiente/static/description/icon.png"/>
+    <menuitem name="Equipos" id="liga_eficiente_equipo_menu" parent="liga_eficiente_base_menu" action="liga_eficiente_equipo_action" />
+
+    <!-- Vista formulario -->
+    <record id="liga_eficiente_equipo_view_form" model="ir.ui.view">
+        <field name="name">Formulario de equipo de futbol</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="nombre" />
+                        <field name="escudo" widget="image" class="oe_avatar" />
+                        <field name="fecha_fundacion" />
+                    </group>
+                    <group>
+                        <field name="descripcion" />
+                        <field name="victorias" readonly="True" />
+                        <field name="empates" readonly="True" />
+                        <field name="derrotas" readonly="True" />
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Partidos como Local">
+                        <field name="partidos_jugados">
+                            <list>
+                                <field name="equipo_fuera" />
+                                <field name="goles_casa" />
+                                <field name="goles_fuera" />
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Partidos como Visitante">
+                        <field name="partidos_visitante">
+                            <list>
+                                <field name="equipo_casa" />
+                                <field name="goles_casa" />
+                                <field name="goles_fuera" />
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <!-- list(list) View -->
+    <record id="liga_eficiente_equipo_view_list" model="ir.ui.view">
+        <field name="name">Lista de Equipos de la liga</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="True" default_order="nombre asc"> <!-- 'desc' descendiente ; 'asc' ascendente -->
+                <field name="escudo" widget="image" class="oe_avatar" width="60" />
+                <field name="nombre" width="120" />
+                <field name="puntos" width="80" />
+                <field name="jugados" width="80" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista busqueda-->
+    <record id="liga_eficiente_equipo_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda de Equipos por nombre</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre" />
+             </search>
+        </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record id="liga_eficiente_equipo_view_kanban" model="ir.ui.view">
+        <field name="name">Lista de Equipos en Kanban</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="escudo" />
+                <field name="nombre" />
+                <field name="puntos" />
+                <field name="jugados" />
+                <field name="victorias" />
+                <field name="empates" />
+                <field name="derrotas" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card">
+                            <!-- Escudo del equipo -->
+                            <div style="text-align: center; margin-bottom: 10px;">
+                                <field name="escudo" widget="image" style="max-height: 100px; max-width: 100px; border-radius: 50%;" />
+                            </div>
+                            <!-- Nombre del equipo -->
+                            <div style="text-align: center; font-weight: bold;">
+                                <t t-esc="record.nombre.value" />
+                            </div>
+                            <!-- Datos adicionales del equipo -->
+                            <div style="margin-top: 10px;">
+                                <p><strong>Puntos:</strong> <t t-esc="record.puntos.value" /></p>
+                                <p><strong>Partidos Jugados:</strong> <t t-esc="record.jugados.value" /></p>
+                                <p><strong>Victorias:</strong> <t t-esc="record.victorias.value" /></p>
+                                <p><strong>Empates:</strong> <t t-esc="record.empates.value" /></p>
+                                <p><strong>Derrotas:</strong> <t t-esc="record.derrotas.value" /></p>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vista Graph  que muestra información usando como base los puntos-->
+    <record model="ir.ui.view" id="liga_eficiente_equipo_view_graph">
+        <field name="name">Puntos por equipo</field>
+        <field name="model">liga_eficiente.equipo</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <!-- Indicamos que cada fila es un equipo y que la medida que los valora son los puntos
+                Con esto conseguimos, por ejemplo, en un pie chart, que cada quesito sea un equipo
+                y el tamaño del quesito sean los puntos -->
+              <graph string="Puntos por equipo">
+                <field name="nombre" type="row"/>
+                <field name="puntos" type="measure"/>
+             </graph>
+         </field>
+     </record>
+</odoo>

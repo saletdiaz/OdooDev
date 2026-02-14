@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tareas_calendar_view" model="ir.ui.view">
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <!-- Definimos las fechas (inicio y final)
+                 así como el color del proyecto para la vista de calendario
+                 PD: el único dato obligatorio es "date_start"
+            -->
+            <calendar date_start="date_assign" date_stop="date_end" 
+                      color="project_id">
+                    <field name="state" widget="project_task_state_selection" readonly="1"/>
+                    <field name="priority" widget="priority"/>
+                    <field name="project_id" widget="project" invisible="context.get('default_project_id', False)"/>
+                    <field name="user_ids" widget="many2many_avatar_user" invisible="not user_ids"/>
+                    <field name="partner_id" invisible="not partner_id"/>
+            </calendar>
+        </field>
+    </record>  
+
+    <record id='action_tareas_calendar' model='ir.actions.act_window'>
+        <field name="name">Mis Únicas tareas (Calendario)</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">calendar,list,form</field>
+        <!-- Indicamos como contexto que la vista de referencia es la vista tareas_calendar_view  -->
+        <field name="context">
+            {'calendar_view_ref': 'EJ01_ListaTareasCalendar.tareas_calendar_view'}
+        </field>
+    </record>
+
+    <menuitem id="menu_custom_top_level" 
+              name="Mis tareas (Calendario)" 
+              web_icon="EJ01_ListaTareasCalendar/static/description/icon.png"/>
+    <menuitem id="menu_tareas_calendar" 
+              parent="menu_custom_top_level"
+              action="action_tareas_calendar"
+              sequence="10" />
+</odoo>

@@ -1,0 +1,44 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: db-container
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mi-red
+    restart: unless-stopped
+
+  odoo:
+    image: odoo:19
+    container_name: odoo-container
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: odoo
+      DB_PASSWORD: odoo
+    ports:
+      - "8074:8069"
+    volumes:
+      - odoo_data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    networks:
+      - mi-red
+    restart: unless-stopped
+
+networks:
+  mi-red:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  odoo_data:

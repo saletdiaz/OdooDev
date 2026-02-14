@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="enduro_competicio_view_list" model="ir.ui.view">
+        <field name="name">Lista de Competiciones de Enduro</field>
+        <field name="model">enduro.competicio</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="fecha" />
+                <field name="terreno" />
+            </list>
+        </field>
+    </record>
+
+    <record id="enduro_competicio_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Competición</field>
+        <field name="model">enduro.competicio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="fecha" />
+                        <field name="terreno" />
+                        <field name="max_participantes" />
+                    </group>
+                    <group>
+                        <field name="description" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="enduro_participant_view_list" model="ir.ui.view">
+        <field name="name">Lista de Participantes</field>
+        <field name="model">enduro.participant</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="moto" />
+                <field name="categoria" />
+            </list>
+        </field>
+    </record>
+
+    <record id="enduro_participant_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Participant</field>
+        <field name="model">enduro.participant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="moto" />
+                        <field name="categoria" />
+                        <field name="edad" />
+                        <field name="competicio_id" />
+                        <field name="finalizacion" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='enduro_competicio_action' model='ir.actions.act_window'>
+        <field name="name">Competiciones</field>
+        <field name="res_model">enduro.competicio</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id='enduro_participant_action' model='ir.actions.act_window'>
+        <field name="name">Participantes</field>
+        <field name="res_model">enduro.participant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem name="Enduro" id="enduro_base_menu" />
+    
+    <menuitem name="Competiciones" id="enduro_competicio_menu" 
+              parent="enduro_base_menu" 
+              action="enduro_competicio_action" />
+              
+    <menuitem name="Participantes" id="enduro_participant_menu" 
+              parent="enduro_base_menu" 
+              action="enduro_participant_action" />
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="group_admin_liga" model="res.groups">
+        <field name="name">Administrador Liga</field>
+    </record>
+
+    <record id="group_visualizador_liga" model="res.groups">
+        <field name="name">Visualizador Liga</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./odoo", 
+        "C:/Users/salero/OdooDev/odoo"
+    ]
+}

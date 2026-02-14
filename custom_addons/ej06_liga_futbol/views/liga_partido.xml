@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='liga_partido_action' model='ir.actions.act_window'>
+        <field name="name">Partidos de la liga</field>
+        <!-- Indicamos vistas para este modelo (categoria) -->
+        <field name="res_model">liga.partido</field>
+        <!-- Indicamos que este modelo se puede ver en kanban, list y form -->
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem name="Partidos de la liga" id="liga_partido_menu" parent="liga_base_menu" action="liga_partido_action" />
+
+    <!-- VISTA DE FORMULARIO -->
+    <record id="liga_partido_view_form" model="ir.ui.view">
+        <field name="name">Formulario Partidos</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="equipo_casa" />
+                        <field name="goles_casa" />
+                    </group>
+                    <group>
+                        <field name="equipo_fuera" />
+                        <field name="goles_fuera" />
+                    </group>
+
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista list -->
+    <record id="liga_partido_view_list" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <list>
+                <!-- Indicamos que atributos usaremos al hacer la vista list -->
+                <field name="equipo_casa" />
+                <field name="goles_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_fuera" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record id="liga_partido_view_kanban" model="ir.ui.view">
+        <field name="name">liga.partido.kanban</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <field name="equipo_casa"/>
+                <field name="equipo_fuera"/>
+                <field name="goles_casa"/>
+                <field name="goles_fuera"/>
+                <field name="escudo_casa"/>
+                <field name="escudo_fuera"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click o_kanban_card p-3">
+
+                            <div class="text-center fw-bold text-muted mb-3">
+                                Resultado
+                            </div>
+
+                            <!-- CASA -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="escudo_casa"
+                                        widget="image"
+                                        class="o_kanban_avatar"
+                                        options="{'size': [36, 36]}"/>
+                                    <span class="fw-bold">
+                                        <field name="equipo_casa"/>
+                                    </span>
+                                </div>
+                                <span class="fs-4 fw-bold">
+                                    <field name="goles_casa"/>
+                                </span>
+                            </div>
+
+                            <!-- FUERA -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <field name="escudo_fuera"
+                                        widget="image"
+                                        class="o_kanban_avatar"
+                                        options="{'size': [36, 36]}"/>
+                                    <span class="fw-bold">
+                                        <field name="equipo_fuera"/>
+                                    </span>
+                                </div>
+                                <span class="fs-4 fw-bold">
+                                    <field name="goles_fuera"/>
+                                </span>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

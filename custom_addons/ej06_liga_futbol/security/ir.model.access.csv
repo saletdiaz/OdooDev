@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_equipo_admin,liga.equipo_admin,model_liga_equipo,group_admin_liga,1,1,1,1
+acl_partido_admin,liga.partido_admin,model_liga_partido,group_admin_liga,1,1,1,1
+acl_equipo_visualizador,liga.equipo_visualizador,model_liga_equipo,group_visualizador_liga,1,0,0,0
+acl_partido_visualizador,liga.partido_visualizador,model_liga_partido,group_visualizador_liga,1,0,0,0

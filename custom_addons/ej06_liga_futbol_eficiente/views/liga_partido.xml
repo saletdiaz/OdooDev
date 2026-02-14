@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='liga_eficiente_partido_action' model='ir.actions.act_window'>
+        <field name="name">Partidos de la liga</field>
+        <!-- Indicamos vistas para este modelo (categoria) -->
+        <field name="res_model">liga_eficiente.partido</field>
+        <!-- Indicamos que este modelo se puede ver en kanban, list y form -->
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem name="Partidos" id="liga_eficiente_partido_menu" parent="liga_eficiente_base_menu" action="liga_eficiente_partido_action" />
+
+    <!-- VISTA DE FORMULARIO -->
+    <record id="liga_eficiente_partido_view_form" model="ir.ui.view">
+        <field name="name">Formulario Partidos</field>
+        <field name="model">liga_eficiente.partido</field>
+        <field name="arch" type="xml">
+            <form>
+                            <sheet>
+                    <!-- Cabecera con los nombres de los equipos -->
+                    <div class="o_form_label">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="text-align: center;">
+                                <h3><field name="equipo_casa" /></h3>
+                                <field name="escudo_casa" widget="image" options="{'size': [120, 120]}" />
+                                <p><strong>Goles:</strong> <field name="goles_casa" /></p>
+                            </div>
+                            <div style="text-align: center;">
+                                <h2>VS</h2>
+                            </div>
+                            <div style="text-align: center;">
+                                <h3><field name="equipo_fuera" /></h3>
+                                <field name="escudo_fuera" widget="image" options="{'size': [120, 120]}" />
+                                <p><strong>Goles:</strong> <field name="goles_fuera" /></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Información adicional -->
+                    <group>
+                        <field name="fecha_partido" />
+                        <field name="ubicacion" />
+                        <field name="notas" widget="html" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+ 
+    <!-- Vista list -->
+    <record id="liga_eficiente_partido_view_list" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <list>
+                <!-- Indicamos que atributos usaremos al hacer la vista list -->
+                <field name="equipo_casa" />
+                <field name="goles_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_fuera" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record id="liga_eficiente_partido_view_kanban" model="ir.ui.view">
+        <field name="name">Vista Kanban de Partidos</field>
+        <field name="model">liga_eficiente.partido</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="equipo_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_casa" />
+                <field name="goles_fuera" />
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_card" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                            <!-- Equipo Local -->
+                            <div style="text-align: center; width: 40%;">
+                                <img alt="Escudo Local" t-att-src="'/web/image/liga_eficiente.equipo/' + record.equipo_casa.raw_value + '/escudo'" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;" />
+                                <div>
+                                    <strong>Local:</strong> <t t-esc="record.equipo_casa.value" />
+                                </div>
+                                <div>
+                                    <strong>Goles:</strong> <t t-esc="record.goles_casa.raw_value" />
+                                </div>
+                            </div>
+                            <!-- Versus -->
+                            <div style="text-align: center; width: 20%;">
+                                <strong>VS</strong>
+                            </div>
+                            <!-- Equipo Visitante -->
+                            <div style="text-align: center; width: 40%;">
+                                <img alt="Escudo Visitante" t-att-src="'/web/image/liga_eficiente.equipo/' + record.equipo_fuera.raw_value + '/escudo'" style="width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;" />
+                                <div>
+                                    <strong>Visitante:</strong> <t t-esc="record.equipo_fuera.value" />
+                                </div>
+                                <div>
+                                    <strong>Goles:</strong> <t t-esc="record.goles_fuera.raw_value" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
